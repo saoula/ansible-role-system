@@ -1,0 +1,27 @@
+---
+- name: Update APT package cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: ensure https support for apt is installed
+  apt:
+    pkg: apt-transport-https
+    state: present
+
+- name: Upgrade APT to the latest packages
+  apt:
+    upgrade: safe
+
+- name: install main system packages
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+  with_items:
+    - build-essential
+    - git
+    - vim
+    - curl
+    - zip
+    - rsync
+    - wget
